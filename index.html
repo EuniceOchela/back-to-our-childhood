@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f1e6">
+<meta name="description" content="Rediscover Nigerian childhood games, share memories, and play browser-based mini games.">
+<title>Back to Our Childhood</title>
+<link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+</head>
+<body><div class="app" id="app">
+<header class="wrap nav"><a class="brand" href="#home" aria-label="Back to Our Childhood home"><span class="brand-mark">✳</span><span>Back to Our Childhood</span></a><nav class="nav-links"><a href="#games">Games</a><a href="#memories">Memories</a><a href="#stories">Stories</a><a href="#how">How to play</a></nav><div class="nav-actions"><button class="btn btn-outline btn-small" id="bocAccountButton" onclick="openProfile()">☺ <span id="navPlayer">Your player</span></button><button class="btn btn-primary btn-small" onclick="scrollToGames()">Play now ↗</button></div></header>
+<main>
+<section class="wrap" id="backendPanel" style="padding-top:24px">
+  <div class="quiz-panel" style="grid-template-columns:1fr 1fr">
+    <div>
+      <span class="section-kicker">Online playground</span>
+      <h2 id="backendTitle">Play with people on another device.</h2>
+      <p id="backendStatus">Supabase is not configured yet. Add your project URL and publishable key to enable accounts and real online rooms.</p>
+    </div>
+    <div id="backendActions" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end">
+      <button class="btn btn-primary btn-small" id="bocSignInButton">Sign in</button>
+      <button class="btn btn-outline btn-small" id="bocRoomButton">Create online room</button>
+    </div>
+  </div>
+</section>
+<section class="wrap hero" id="home"><div><span class="eyebrow"><i></i> A little trip back home</span><h1>Remember when all we needed was <em>a friend and a game?</em></h1><p class="hero-copy">From Ten-Ten after school to Name, Animal, Place and Thing during break time — the games that made our childhood deserve another round.</p><div class="hero-actions"><button class="btn btn-primary" onclick="scrollToGames()">Let’s play <span>→</span></button><button class="btn btn-outline" onclick="createInvite()">♧ Invite your friends</button></div><div class="social-proof"><div class="avatar-stack"><span>🧒🏾</span><span>👧🏿</span><span>🧒🏽</span><span>👧🏾</span></div><span>Old-school games. New memories. All together.</span></div></div><div class="hero-art" role="img" aria-label="Illustration of a sunny Nigerian compound with a hopscotch grid"><div class="sun"></div><div class="cloud">☁</div><div class="house"><div class="roof"></div><div class="door"></div><div class="window"></div></div><div class="yard"></div><div class="kid one">🧒🏾</div><div class="kid two">👧🏿</div><div class="ball">⚽</div><div class="hop-grid"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span></div><div class="float-card"><strong>“One more round!”</strong>Just 5 more minutes…</div><div class="art-label">THE GOOD OLD DAYS ✦</div></div></section>
+<div class="wrap stats"><div class="stat"><strong>20</strong><span>Childhood favourites</span></div><div class="stat"><strong>3</strong><span>Launch games to explore</span></div><div class="stat"><strong>∞</strong><span>Memories to make</span></div></div>
+<section class="wrap featured" id="featured"><div class="section-head"><div><span class="section-kicker">Start the nostalgia</span><h2>Pick your first game</h2><p>Choose a favourite and bring your people along. The first three games are our launch playground.</p></div><button class="btn btn-outline btn-small" onclick="scrollToGames()">See all 20 games →</button></div><div class="game-grid" id="featuredGrid"></div></section>
+<section class="library" id="games"><div class="wrap"><div class="section-head"><div><span class="section-kicker">The whole neighbourhood</span><h2>Our games library</h2><p>Some are ready for a round; the rest are on the way. Search for the game you remember.</p></div></div><div class="filters"><input class="search" id="gameSearch" placeholder="⌕  Search childhood games…" aria-label="Search games" oninput="renderLibrary()"><button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">All 20</button><button class="filter-btn" data-filter="ready" onclick="setFilter('ready',this)">Ready to play</button><button class="filter-btn" data-filter="soon" onclick="setFilter('soon',this)">Coming soon</button></div><div class="library-grid" id="libraryGrid"></div><p class="notice">Coming Soon games are listed for the full vision but are not playable in this first prototype.</p></div></section>
+<section class="memory" id="memories"><div class="wrap memory-layout"><div class="memory-intro"><span class="section-kicker" style="color:#e9c875">The memory wall</span><h2>What game takes you straight back?</h2><p>Tell us about the compound champion, the school-break rivalry, or the friend who never accepted defeat.</p><form class="memory-form" onsubmit="addMemory(event)"><input class="field" id="memoryName" placeholder="Your name (or leave blank)" maxlength="35"><textarea class="field" id="memoryText" placeholder="I remember when we used to…" required maxlength="500"></textarea><button class="btn btn-secondary" type="submit">Pin my memory ✦</button></form><p style="font-size:11px;color:#dce4d4;position:relative;z-index:1">Prototype note: memories are saved only in this browser.</p></div><div><div class="section-head"><div><span class="section-kicker">A little time capsule</span><h2>Memories we share</h2></div></div><div class="memory-list" id="memoryList"></div></div></div></section>
+<section class="how" id="how"><div class="wrap"><div class="section-head"><div><span class="section-kicker">Bring your people</span><h2>How to play with friends</h2><p>Online rooms are part of the plan. This preview lets you explore the flow, but it is not yet connected to a shared online backend.</p></div></div><div class="steps"><article class="step"><div class="step-num">01</div><h3>Choose your name</h3><p>Pick your own display name and avatar. Your identity is yours — never a fictional story character.</p></article><article class="step"><div class="step-num">02</div><h3>Choose a game</h3><p>Start a solo challenge, try a local demo, or explore the online-room flow.</p></article><article class="step"><div class="step-num">03</div><h3>Call your people</h3><p>Share a room code or invitation link when the real multiplayer backend is connected.</p></article></div></div></section>
+<section class="wrap story" id="stories"><div class="story-card"><div class="story-illustration" aria-label="Illustration of children playing in a compound">🏡 🪁 🧒🏾</div><div class="story-copy"><span class="section-kicker">Remember those days?</span><h2 id="storyTitle">The compound was our whole world.</h2><p id="storyText">By four o’clock, school bags were on the floor and somebody was already calling from the gate. Nobody needed a group chat. One shout of “Are you coming outside?” was enough to gather the whole neighbourhood.</p><div class="story-switch"><button class="btn btn-outline btn-small" onclick="changeStory(-1)">← Previous</button><button class="btn btn-primary btn-small" onclick="changeStory(1)">Next memory →</button></div><p style="font-size:10px">Fictional stories inspired by shared childhood experiences.</p></div></div></section>
+<section class="wrap quiz"><div class="quiz-panel"><div><span class="section-kicker">Quick trip down memory lane</span><h2>How well do you remember?</h2><p id="quizQuestion">Which game usually asks you to name an animal, a place, and a thing beginning with the same letter?</p><div id="quizResult" class="quiz-result" aria-live="polite"></div></div><div id="quizAnswers" style="display:flex;gap:8px;flex-wrap:wrap;max-width:260px"></div></div></section>
+</main><footer class="footer"><div class="wrap footer-inner"><div><a class="brand" href="#home"><span class="brand-mark">✳</span><span>Back to Our Childhood</span></a><p>Made with love for the games that raised us.</p></div><div class="footer-links"><a href="#featured">Games</a><a href="#how">How to play</a><a href="#memories">Community</a><a href="#stories">About</a><a href="#home" onclick="showToast('Add a privacy policy before public launch.')">Privacy</a><a href="#home" onclick="showToast('Add terms of use before public launch.')">Terms</a></div></div></footer>
+</div>
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="backdropClose(event)"><div class="modal"><div class="modal-head"><div><h2 id="modalTitle">Let’s play</h2><p id="modalSubtitle">Choose how you want to play.</p></div><button class="close" onclick="closeModal()" aria-label="Close dialog">×</button></div><div class="modal-body" id="modalBody"></div></div></div>
+<div class="modal-backdrop" id="bocBackendModal" role="dialog" aria-modal="true" aria-labelledby="bocBackendModalTitle" style="display:none">
+  <div class="modal">
+    <div class="modal-head">
+      <div><h2 id="bocBackendModalTitle">Account</h2><p id="bocBackendModalSubtitle">Sign in to play online.</p></div>
+      <button class="close" id="bocBackendClose" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body" id="bocBackendBody"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="script.js" defer></script>
+<script type="module" src="js/backend-app.js"></script></body></html>
